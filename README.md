@@ -1,2 +1,3 @@
 # Veason-R1
-Official code of Veason-R1
+Veason-R1 has been accepted by CVPR 2026!
+
