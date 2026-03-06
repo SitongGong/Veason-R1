@@ -1,0 +1,69 @@
+data:
+  name: video_seg_keyframe_sft_base_mod
+  train_files: /18515601223/dataset/rvos_root/ReVOS
+  val_files: None
+  prompt_key: problem
+  max_prompt_length: 7100
+  max_response_length: 1024
+  rollout_batch_size: 16
+  shuffle: true
+  seed: 42
+  max_pixels: 12845056
+  min_pixels: 3136
+  keyframe_resize: 560
+  reference_image_resize: 560
+  sam2_mode: "video"
+  sampled_frames: 6
+
+algorithm:
+  adv_estimator: grpo
+  kl_coef: 0.0
+
+worker:
+  actor:
+    global_batch_size: 16
+    micro_batch_size_per_device_for_update: 1
+    micro_batch_size_per_device_for_experience: 1
+    max_grad_norm: 1.0
+    use_kl_loss: true
+    kl_loss_coef: 5.0e-3
+    kl_loss_type: low_var_kl
+    model:
+      model_path: /18515601223/Seg-Zero-main/pretrained_models/Qwen2.5-VL-3B-Instruct
+      enable_gradient_checkpointing: true
+    optim:
+      lr: 1.0e-6
+      weight_decay: 1.0e-2
+    fsdp:
+      param_offload: false # false
+      optimizer_offload: false # false
+      torch_dtype: null
+    offload:
+      param_offload: true
+      optimizer_offload: true
+
+  rollout:
+    temperature: 1.0
+    tensor_parallel_size: 2
+    gpu_memory_utilization: 0.25
+    n: 8
+    enable_chunked_prefill: true
+
+  ref:
+    offload:
+      param_offload: true
+
+  reward:
+    reward_type: function
+    compute_score: video_match_keyframe_sft_sam_mod
+
+trainer:
+  total_episodes: 1
+  logger: ["console", "wandb"]
+  project_name: easy_r1_video_keyframe_sft_mod_sam2_1
+  n_gpus_per_node: 2
+  nnodes: 1
+  save_freq: 100
+  test_freq: 100000
+  val_before_train: false
+  val_only: false
