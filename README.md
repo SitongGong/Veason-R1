@@ -223,6 +223,13 @@ The reward function (`grpo_reward/reward_score.py`) computes four components:
 - **Spatial Reward** (`Rs`): Hungarian-matched IoU between predicted and GT bounding boxes
 - **Consistency Reward** (`Ru`): Video-level mIoU via SAM2 mask propagation from matched boxes
 
+## TODO List
+
+- [x] Release dataset construction code
+- [x] Release model training code
+- [ ] Release model weights
+- [ ] Release inference code
+
 ## Acknowledgements
 
 This project is built upon the following excellent works:
