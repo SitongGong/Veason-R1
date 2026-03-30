@@ -63,7 +63,7 @@ Video reasoning segmentation (VRS) requires pixel-wise mask prediction from lang
 | **Veason-R1-3B** | **51.8** | **58.5** | **55.2** |
 | **Veason-R1-7B** | **56.0** | **63.8** | **59.9** |
 
-### MeViS Benchmark
+### MeViS Benchmark (Zero-Shot)
 
 | Methods | J | F | J&F |
 |:--------|:---:|:---:|:---:|
