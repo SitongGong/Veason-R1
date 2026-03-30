@@ -1,13 +1,23 @@
 import os
 import json
 import random
+import argparse
 
+
+parser = argparse.ArgumentParser(description="Stratified sampling from ReVOS training set")
+parser.add_argument("--input_json", type=str, default="/dataset/rvos_root/ReVOS/meta_expressions_train_.json",
+                    help="Path to the input meta expressions JSON file")
+parser.add_argument("--output_json", type=str, default="/dataset/rvos_root/ReVOS/meta_expressions_train_select.json",
+                    help="Path to save the sampled output JSON file")
+parser.add_argument("--target_size", type=int, default=10000,
+                    help="Target number of samples to select")
+args = parser.parse_args()
 
 referring_num = 0
 reasoning_num = 0
 single_instance = 0
 multiple_instance = 0
-json_file = "/dataset/rvos_root/ReVOS/meta_expressions_train_.json"
+json_file = args.input_json
 json_dict = json.load(open(json_file, "r"))["videos"]
 for video_name, video_dict in json_dict.items():
     for exp_id, exp_dict in video_dict["expressions"].items():
@@ -30,8 +40,7 @@ ref_list = []
 reason_list = []
 single_list = []
 multi_list = []
-json_file = "/dataset/rvos_root/ReVOS/meta_expressions_train_.json"
-video_data = json.load(open(json_file, "r"))["videos"]
+video_data = json.load(open(args.input_json, "r"))["videos"]
 for video_name, vid_data in video_data.items():
     for exp_id, exp_dict in vid_data["expressions"].items():
         
@@ -50,7 +59,7 @@ def sample_by_overlap(type_list, obj_list, n):
     candidates = list(set(type_list) & set(obj_list))
     return random.sample(candidates, min(n, len(candidates)))
 
-target_size = 10000
+target_size = args.target_size
 samples = []
 samples += sample_by_overlap(ref_list, single_list, round(referring_ratio * single_ratio * target_size))   # ref + single
 samples += sample_by_overlap(ref_list, multi_list, round(referring_ratio * multiple_ratio * target_size))    # ref + multi
@@ -71,6 +80,22 @@ new_json_dict = {}
 for video_name, video_dict in json_dict.items():
     new_expressions_dict = {}
     for exp_id, exp_dict in video_dict["expressions"].items():
+        if (video_name, exp_id) in samples:
+            new_expressions_dict[exp_id] = exp_dict
+    new_video_dict = {
+        "expressions": new_expressions_dict,
+        "frames": video_dict["frames"],
+        "vid_id": video_dict["vid_id"],
+        "height": video_dict["height"],
+        "width": video_dict["width"]
+    }
+    new_json_dict[video_name] = new_video_dict
+    
+output_dict = {"videos": new_json_dict}
+output_file = args.output_json
+with open(output_file, "w") as f:
+    json_string = json.dumps(output_dict, indent=4)
+    f.write(json_string)
         if (video_name, exp_id) in samples:
             new_expressions_dict[exp_id] = exp_dict
     new_video_dict = {
