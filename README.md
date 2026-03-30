@@ -223,12 +223,19 @@ The reward function (`grpo_reward/reward_score.py`) computes four components:
 - **Spatial Reward** (`Rs`): Hungarian-matched IoU between predicted and GT bounding boxes
 - **Consistency Reward** (`Ru`): Video-level mIoU via SAM2 mask propagation from matched boxes
 
+## Inference
+We provide inference code for ReasonVOS and it can alse be extended to other datasets.
+```bash
+bash multi_gpu_eval_keyframe_sft_mod_reason_vos.sh
+```
+Please reference [VISA](https://github.com/cilinyan/VISA) to compute evaluation metrics. 
+
 ## TODO List
 
 - [x] Release dataset construction code
 - [x] Release model training code
+- [x] Release inference code
 - [ ] Release model weights
-- [ ] Release inference code
 
 ## Acknowledgements
 
