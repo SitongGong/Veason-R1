@@ -89,6 +89,8 @@ Video reasoning segmentation (VRS) requires pixel-wise mask prediction from lang
 ### Environment Setup
 
 ```bash
+git clone https://github.com/SitongGong/Veason-R1.git
+cd Veason-R1
 conda create -n veason_r1 python=3.11 -y
 conda activate veason_r1
 
