@@ -95,6 +95,7 @@ conda create -n veason_r1 python=3.11 -y
 conda activate veason_r1
 
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1
+pip install -r requirements.txt
 pip install -e .
 pip install sam2
 pip install matplotlib
