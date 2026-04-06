@@ -235,7 +235,7 @@ Please reference [VISA](https://github.com/cilinyan/VISA) to compute evaluation 
 - [x] Release dataset construction code
 - [x] Release model training code
 - [x] Release inference code
-- [ ] Release model weights
+- [x] Release model weights: [Veason-R1-3B](https://huggingface.co/SitongGong/Veason-R1)
 
 ## Acknowledgements
 
