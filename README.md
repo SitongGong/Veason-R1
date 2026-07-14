@@ -1,5 +1,7 @@
 # Veason-R1: Reinforcing Video Reasoning Segmentation to Think Before It Segments
 
+This work has been accepted by CVPR 2026!
+
 <!-- <p align="center">
   <strong>Sitong Gong*, Yunzhi Zhuge*†, Lu Zhang, Jiazuo Yu, Xu Jia, Pingping Zhang, Huchuan Lu</strong><br>
   IIAU Lab, Dalian University of Technology<br>
